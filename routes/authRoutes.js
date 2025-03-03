@@ -6,6 +6,7 @@ const { authMiddleware } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // ✅ User Registration with Validation
+// Ensures name, email, and password are provided and valid
 router.post(
     "/register",
     [
@@ -24,6 +25,7 @@ router.post(
 );
 
 // ✅ User Login with Validation
+// Ensures email and password are provided and valid
 router.post(
     "/login",
     [
@@ -41,9 +43,11 @@ router.post(
 );
 
 // ✅ Get User Profile
+// Requires authentication middleware to ensure the user is logged in
 router.get("/profile", authMiddleware, getProfile);
 
 // ✅ Update User Profile with Validation
+// Allows optional updates for name, email, and password with validation
 router.put(
     "/profile",
     authMiddleware,
@@ -63,6 +67,8 @@ router.put(
 );
 
 // ✅ Upload Profile Photo
+// Requires authentication middleware to allow only logged-in users to upload
 router.post("/upload-photo", authMiddleware, uploadProfilePhoto);
 
+// ✅ Export the router module
 module.exports = router;

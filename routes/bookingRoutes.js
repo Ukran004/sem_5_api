@@ -11,14 +11,26 @@ const { authMiddleware, adminMiddleware } = require('../middleware/authMiddlewar
 
 const router = express.Router();
 
-// User routes
+// ✅ User Routes
+
+// Create a new booking (User must be authenticated)
 router.post('/', authMiddleware, createBooking);
+
+// Get all bookings of the logged-in user
 router.get('/my', authMiddleware, getMyBookings);
+
+// Cancel a booking (User can only cancel their own booking)
 router.delete('/:id/cancel', authMiddleware, cancelBooking);
 
-// Admin routes
+// ✅ Admin Routes (Require authentication and admin privileges)
+
+// Get all bookings (Admin only)
 router.get('/', authMiddleware, adminMiddleware, getBookings);
+
+// Approve a booking (Admin only)
 router.put('/:id/approve', authMiddleware, adminMiddleware, approveBooking);
+
+// Decline a booking (Admin only)
 router.put('/:id/decline', authMiddleware, adminMiddleware, declineBooking);
 
 module.exports = router;
